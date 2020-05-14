@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testStart();
+        timerStart();
     }
 
-    public void testStart() {
+    public void timerStart() {
         timer_text = (TextView) findViewById(R.id.timer);
         timer_sec = 0;
         count = 0;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Log.i("Test", "Timer start");
-                Update();
+                timerUpdate();
                 timer_sec++;
             }
         };
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(second, 0, 1000);
     }
 
-    protected void Update() {
+    protected void timerUpdate() {
         Runnable updater = new Runnable() {
             public void run() {
                 timer_text.setText(timer_sec + "초");
