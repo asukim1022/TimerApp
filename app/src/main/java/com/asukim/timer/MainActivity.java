@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -12,10 +14,10 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    int timer_sec;
+    int timerSec;
     int count;
     private TimerTask second;
-    private TextView timer_text;
+    private TextView timerText;
     private final Handler handler = new Handler();
 
 
@@ -24,12 +26,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timerStart();
+        timerText = (TextView) findViewById(R.id.timer);
+
+        Button startBtn = (Button) findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timerStart();
+            }
+        });
     }
 
     public void timerStart() {
-        timer_text = (TextView) findViewById(R.id.timer);
-        timer_sec = 0;
+        timerSec = 0;
         count = 0;
 
         second = new TimerTask() {
@@ -38,17 +47,19 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Log.i("Test", "Timer start");
                 timerUpdate();
-                timer_sec++;
+                timerSec++;
             }
         };
         Timer timer = new Timer();
-        timer.schedule(second, 0, 1000);
+
+        //timer라는 TimerTask를 선언하고 시작, 딜레이 0초, 1초마다 반복복
+       timer.schedule(second, 0, 1000);
     }
 
     protected void timerUpdate() {
         Runnable updater = new Runnable() {
             public void run() {
-                timer_text.setText(timer_sec + "초");
+                timerText.setText(timerSec + "초");
             }
         };
         handler.post(updater);
